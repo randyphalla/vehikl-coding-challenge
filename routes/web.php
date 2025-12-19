@@ -1,23 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OdometerController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', function() {
-    return view('home');
-});
-
-Route::get('/car/{id}', function() {
-    return view('form');
-});
-
-Route::post('/check', function () {
-    return view('welcome');
-});
-
-Route::get('/result/{id}', function () {
-    return view('result');
-});
+Route::get('/', [OdometerController::class, 'index']);
+Route::post('/cars', [OdometerController::class, 'store']);
+Route::get('/cars/{id}/edit', [OdometerController::class, 'edit']);
+Route::put('/cars/{id}', [OdometerController::class, 'update']);
+Route::delete('/cars/{id}', [OdometerController::class, 'destory']);
