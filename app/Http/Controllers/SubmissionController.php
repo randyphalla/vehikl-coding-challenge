@@ -53,7 +53,7 @@ class SubmissionController extends Controller
         $currentOdometer = $submission->current_odometer;
 
         // check if the car needs an oil change or not
-        $message = "Car doesnt need an oil change";
+        $message = "Your car doesn't need an oil change!!";
 
         // https://laravel.com/docs/12.x/helpers#dates
         $previousOilChangeDate = $submission->previous_oil_change_date;
@@ -61,7 +61,13 @@ class SubmissionController extends Controller
         $today = Carbon::now();
         $isOver6Month = $previousOilChangeDateParse->diffInMonths($today) > 6;
 
-        if ($currentOdometer >= 5000 || $isOver6Month) $message = "Car need's an oil change!";
+        if ($currentOdometer >= 5000 && $isOver6Month) {
+            $message = "Car has over 5000 KM and it been over 6 months since your last oil change!!";
+        } else if ($currentOdometer >= 5000) {
+            $message = "Car has over 5000 KM, time to get an oil change!!";
+        } else if ($isOver6Month) {
+            $message = "It been over 6 months since your last oil change!!";
+        }
 
         // return the result view and pass down the submission into the view
         return view('result', [
