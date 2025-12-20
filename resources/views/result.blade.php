@@ -1,6 +1,7 @@
 <x-layout>
+  @include('components.header')
 
-    <h1 class="">{{ $message }}</h1>
+  <h1 class="">{{ $message }}</h1>
 
   <div>
     <h2>Car Information</h2>

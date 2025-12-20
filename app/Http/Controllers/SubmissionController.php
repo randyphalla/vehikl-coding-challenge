@@ -29,7 +29,7 @@ class SubmissionController extends Controller
         ]);
 
         // redirect to results page with the submission id
-        return redirect()->route('submission-show', ['id' => $submission->id]);
+        return redirect()->route('submission-show', ['id' => $submission->id])->with('showBack', true);
     }
 
     public function show($id)
@@ -38,7 +38,7 @@ class SubmissionController extends Controller
         $submission = DB::table('submissions')->find($id);
 
         // get car_id from submission row
-        $car = DB::table('cars')->find( $submission->id);
+        $car = DB::table('cars')->find($submission->car_id);
 
         // check if the car needs an oil change or not
         $message = "Car doesnt need oil change =)";
