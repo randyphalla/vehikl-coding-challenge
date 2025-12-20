@@ -3,8 +3,19 @@
   @include('components.header')
 
   <section>
+    {{-- Form errors --}}
+    @if ($errors->any())
+      <div>
+        <ul>
+          @foreach ($errors->all() as $error )
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     <form
-      action="{{ route('submission-check') }}"
+      action="{{ route('submission-store') }}"
       method="POST"
     >
       @csrf
@@ -22,8 +33,13 @@
           type="number"
           name="current_odometer"
           value={{ $car->current_odometer }}
+          class="@error('current_odometer') is-invalid @enderror"
         />
       </div>
+
+      @error('current_odometer')
+        <span>{{ $message }}</span>
+      @enderror
 
       <div>
         <label for="previous_oil_change_odometer">Odemeter at Previous Oil Change</label>
@@ -31,8 +47,13 @@
           type="number"
           name="previous_oil_change_odometer"
           value={{ $car->previous_oil_change_odometer }}
+          class="@error('previous_oil_change_odometer') is-invalid @enderror"
         />
       </div>
+
+      @error('previous_oil_change_odometer')
+        <span>{{ $message }}</span>
+      @enderror
 
       <div>
         <label for="previous_oil_change_date">Date of Previous Oil Change</label>
@@ -40,8 +61,13 @@
           type="date"
           name="previous_oil_change_date"
           value={{ $car->previous_oil_change_date }}
+          class="@error('previous_oil_change_date') is-invalid @enderror"
         />
       </div>
+
+        @error('previous_oil_change_date')
+        <span>{{ $message }}</span>
+      @enderror
 
       <button>Submit</button>
     </form>

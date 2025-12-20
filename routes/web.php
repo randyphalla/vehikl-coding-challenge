@@ -13,7 +13,7 @@ Route::get('/cars/{id}', [CarController::class, 'show'])->name('car-show');
 // Route::delete('/cars/{id}', [CarController::class, 'destory']);
 
 // Submissions
-Route::post('/check', [ResultsController::class, 'store'])->name('submission-check');
+Route::post('/check', [ResultsController::class, 'store'])->name('submission-store');
 Route::get('/result/{id}', [ResultsController::class, 'show'])->name('submission-show');
 // Route::get('/submissions', [ResultsController::class, 'index']);
 // Route::put('/submissions/{id}', [ResultsController::class, 'update']);
