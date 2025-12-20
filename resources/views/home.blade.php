@@ -3,7 +3,7 @@
 
   <h1 class="flex justify-center">Welcome to the Vehikl Oil Change Challenge</h1>
 
-  <ul>
+  {{-- <ul>
     @foreach ($cars as $car)
       <li>
         <a href="/cars/{{ $car->id }}">
@@ -11,6 +11,6 @@
         </a>
       </li>
      @endforeach
-  </ul>
+  </ul> --}}
 
 </x-layout>
