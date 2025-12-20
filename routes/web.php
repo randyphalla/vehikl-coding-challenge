@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\ResultsController;
+use App\Http\Controllers\SubmissionController;
 
 // Cars
 Route::get('/', [CarController::class, 'index'])->name('home');
@@ -13,9 +13,9 @@ Route::get('/cars/{id}', [CarController::class, 'show'])->name('car-show');
 // Route::delete('/cars/{id}', [CarController::class, 'destory']);
 
 // Submissions
-Route::post('/check', [ResultsController::class, 'store'])->name('submission-store');
-Route::get('/result/{id}', [ResultsController::class, 'show'])->name('submission-show');
-// Route::get('/submissions', [ResultsController::class, 'index']);
-// Route::put('/submissions/{id}', [ResultsController::class, 'update']);
-// Route::get('/result/{id}/edit', [ResultsController::class, 'edit']);
-// Route::delete('/submissions/{id}', [ResultsController::class, 'destory']);
+Route::post('/check', [SubmissionController::class, 'store'])->name('submission-store');
+Route::get('/result/{id}', [SubmissionController::class, 'show'])->name('submission-show');
+// Route::get('/submissions', [SubmissionController::class, 'index']);
+// Route::put('/submissions/{id}', [SubmissionController::class, 'update']);
+// Route::get('/result/{id}/edit', [SubmissionController::class, 'edit']);
+// Route::delete('/submissions/{id}', [SubmissionController::class, 'destory']);

@@ -8,7 +8,7 @@ use App\Models\Submission;
 use Carbon\Carbon;
 
 // https://laravel.com/docs/12.x/controllers
-class ResultsController extends Controller
+class SubmissionController extends Controller
 {
     public function store(Request $request)
     {
