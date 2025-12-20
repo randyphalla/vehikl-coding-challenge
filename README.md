@@ -1,10 +1,12 @@
 # The Vehikl Oil Change Challenge
 
-TODO:
+## Objective
 
-## Description
+Create a small Laravel app that helps determine whether a car is due for an oil change based on odometer and date inputs.
 
-TODO:
+A car needs an oil change if either of the following is true:
+- It’s been more than 5000 km since the last oil change, or
+- It’s been more than 6 months since the last oil change.
 
 ## Getting Started
 
@@ -24,7 +26,7 @@ Node v22.13.1
 
 `composer run dev` | run project
 
-``php artisan migrate` | migrations
+`php artisan migrate` | run migrations
 
 ### Building Project
 
@@ -37,10 +39,17 @@ Node v22.13.1
 `php artisan migrate:rollback` | drops cars table
 `php artisan migrate:fresh` | Drops all tables and reruns migrations
 
+## Create Migration
+> https://laravel.com/docs/12.x/migrations
+
+`php artisan make:migration create_awesome_table`
+
 ## Create Controller
+> https://laravel.com/docs/12.x/controllers
 
 `php artisan make:controller AwesomeController`
 
 ## Create Model
+> https://laravel.com/docs/12.x/eloquent#introduction
 
 `php artisan make:model YourAwesomeModel`
