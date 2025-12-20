@@ -22,19 +22,11 @@
     >
       @csrf
 
-      {{-- <input type="hidden" name="car_id" value={{ $car->id ?? "" }} /> --}}
-
-      {{-- <div>
-        <label for="name">Name</label>
-        <input type="text" name="name" readonly value={{ $car->name ?? "" }} />
-      </div> --}}
-
       <div>
         <label for="current_odometer">Odometer</label>
         <input
           type="number"
           name="current_odometer"
-          value={{ $car->current_odometer ?? "" }}
           class="@error('current_odometer') is-invalid @enderror"
         />
       </div>
@@ -48,7 +40,6 @@
         <input
           type="number"
           name="previous_oil_change_odometer"
-          value={{ $car->previous_oil_change_odometer ?? "" }}
           class="@error('previous_oil_change_odometer') is-invalid @enderror"
         />
       </div>
@@ -62,7 +53,6 @@
         <input
           type="date"
           name="previous_oil_change_date"
-          value={{ $car->previous_oil_change_date ?? "" }}
           class="@error('previous_oil_change_date') is-invalid @enderror"
         />
       </div>

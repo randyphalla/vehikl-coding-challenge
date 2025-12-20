@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            // $table->foreignId('car_id');
             $table->integer('current_odometer');
             $table->date('previous_oil_change_date');
             $table->integer('previous_oil_change_odometer');
