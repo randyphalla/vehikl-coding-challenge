@@ -41,6 +41,11 @@ npm run build
 `php artisan migrate:rollback` | drops cars table
 `php artisan migrate:fresh` | Drops all tables and reruns migrations
 
+## Seeders
+> https://laravel.com/docs/12.x/seeding
+
+`php artisan db:seed --class=CarSeeder`
+
 ### Insert
 
 `php artisan tinker` |

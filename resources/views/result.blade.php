@@ -1,15 +1,13 @@
 <x-layout>
 
-  {{--
-    TODO:
-    1) display message that car is due or for an oil change or not
-    2) Display the original values that were entered the form
-    3) If the user refreshes the page, get the result or submission id and display the results
-  --}}
+    <h1 class="">{{ $message }}</h1>
 
-  <?php
-    print_r($submission);
-    print_r($message);
-  ?>
+  <div>
+    <h2>Car Information</h2>
+    <p>Name: {{ $car->name }}</p>
+    <p>Current Odometer{{ $car->current_odometer }}</p>
+    <p>Previous Oil Change Odometer: {{ $car->previous_oil_change_odometer }}</p>
+    <p>Previous Oil Change Date: {{ $car->previous_oil_change_date }}</p>
+  </div>
 
 </x-layout>

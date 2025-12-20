@@ -19,7 +19,7 @@
             </style>
         @endif
     </head>
-    <body>
+    <body class="p-6">
       {{ $slot }}
     </body>
 </html>

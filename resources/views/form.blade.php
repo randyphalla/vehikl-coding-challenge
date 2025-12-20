@@ -9,11 +9,11 @@
     >
       @csrf
 
-      <input type="hidden" name="car_id" value={{ $car['id'] }} />
+      <input type="hidden" name="car_id" value={{ $car->id }} />
 
       <div>
         <label for="name">Name</label>
-        <input type="text" name="name" readonly value={{$car['name']}} />
+        <input type="text" name="name" readonly value={{ $car->name }} />
       </div>
 
       <div>
@@ -21,7 +21,7 @@
         <input
           type="number"
           name="current_odometer"
-          value={{$car['current_odometer']}}
+          value={{ $car->current_odometer }}
         />
       </div>
 
@@ -30,7 +30,7 @@
         <input
           type="number"
           name="previous_oil_change_odometer"
-          value={{$car['previous_oil_change_odometer']}}
+          value={{ $car->previous_oil_change_odometer }}
         />
       </div>
 
@@ -39,7 +39,7 @@
         <input
           type="date"
           name="previous_oil_change_date"
-          value={{$car['previous_oil_change_date']}}
+          value={{ $car->previous_oil_change_date }}
         />
       </div>
 
