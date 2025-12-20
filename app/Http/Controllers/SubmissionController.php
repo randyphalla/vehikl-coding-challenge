@@ -20,6 +20,8 @@ class SubmissionController extends Controller
         return view('form');
     }
 
+    // TODO: look into custom form validation
+    // https://laravel.com/docs/12.x/validation#validation-error-response-format
     public function store(Request $request)
     {
         // validate form
@@ -30,13 +32,17 @@ class SubmissionController extends Controller
         ]);
 
         // store data into submission table
+        $current_odometer = $validated['current_odometer'];
+        $previous_oil_change_date = $validated['previous_oil_change_date'];
+        $previous_oil_change_odometer = $validated['previous_oil_change_odometer'];
+
         $submission = Submission::create([
-            'current_odometer' => $validated['current_odometer'],
-            'previous_oil_change_date' => $validated['previous_oil_change_date'],
-            'previous_oil_change_odometer' => $validated['previous_oil_change_odometer'],
+            'current_odometer' => $current_odometer,
+            'previous_oil_change_date' =>  $previous_oil_change_date,
+            'previous_oil_change_odometer' => $previous_oil_change_odometer,
         ]);
 
-        // redirect to results page with the submission id
+        // redirect to results page with the submission id and show back link
         return redirect()->route('submission-show', ['id' => $submission->id, 'showBack' => true]);
     }
 
@@ -44,16 +50,18 @@ class SubmissionController extends Controller
     {
         // get submission row
         $submission = DB::table('submissions')->find($id);
+        $currentOdometer = $submission->current_odometer;
 
         // check if the car needs an oil change or not
-        $message = "Car doesnt need oil change =)";
+        $message = "Car doesnt need an oil change";
 
         // https://laravel.com/docs/12.x/helpers#dates
-        $previousOilChangeDate = Carbon::parse($submission->previous_oil_change_date);
+        $previousOilChangeDate = $submission->previous_oil_change_date;
+        $previousOilChangeDateParse = Carbon::parse($previousOilChangeDate);
         $today = Carbon::now();
-        $isOver6Month = $previousOilChangeDate->diffInMonths($today) > 6;
+        $isOver6Month = $previousOilChangeDateParse->diffInMonths($today) > 6;
 
-        if ($submission->current_odometer >= 5000 || $isOver6Month) $message = "need an oil change!!!";
+        if ($currentOdometer >= 5000 || $isOver6Month) $message = "Car need's an oil change!";
 
         // return the result view and pass down the submission into the view
         return view('result', [

@@ -1,13 +1,15 @@
 <x-layout>
   @include('components.header')
 
-  <h1 class="">{{ $message }}</h1>
+  <div class="flex justify-center items-center flex-col">
 
-  <div>
-    <h2>Car Information</h2>
-    <p>Current Odometer: {{ $submission->current_odometer }}</p>
-    <p>Previous Oil Change Odometer: {{ $submission->previous_oil_change_odometer }}</p>
-    <p>Previous Oil Change Date: {{ $submission->previous_oil_change_date }}</p>
+    <h1 class="text-2xl font-bold tracking-tight text-gray-90">{{ $message }}</h1>
+
+    <div class="mt-5 text-left">
+      <p class="text-base font-medium text-gray-900">Current Odometer: <span class="font-bold">{{ $submission->current_odometer }}</span></p>
+      <p class="text-base font-medium text-gray-900">Previous Oil Change Odometer: <span class="font-bold">{{ $submission->previous_oil_change_odometer }}</span></p>
+      <p class="text-base font-medium text-gray-900">Previous Oil Change Date: <span class="font-bold">{{ $submission->previous_oil_change_date }}</span></p>
+    </div>
   </div>
 
 </x-layout>
