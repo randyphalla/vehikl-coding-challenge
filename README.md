@@ -24,7 +24,7 @@ Node v22.13.1
 
 ### Starting development
 
-`composer run dev` | run project
+`composer run dev and http://localhost:8000` | run project and open application in the browser
 
 `php artisan migrate` | run migrations
 
@@ -53,3 +53,11 @@ Node v22.13.1
 > https://laravel.com/docs/12.x/eloquent#introduction
 
 `php artisan make:model YourAwesomeModel`
+
+## Additional Information
+- https://laravel.com/docs/12.x/helpers#dates
+- https://carbon.nesbot.com/docs/
+- https://laravel.com/docs/12.x/validation#creating-form-requests
+- https://laravel.com/docs/12.x/eloquent
+- https://laravel.com/docs/12.x/queries
+-
