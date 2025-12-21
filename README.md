@@ -24,9 +24,9 @@ Node v22.13.1
 
 ### Starting development
 
-`composer run dev and http://localhost:8000` | run project and open application in the browser
+- `composer run dev` and `http://localhost:8000` | run project and open application in the browser
 
-`php artisan migrate` | run migrations
+- `php artisan migrate` | run migrations
 
 ### Building Project
 
@@ -35,9 +35,9 @@ Node v22.13.1
 ## Migrations
 > https://laravel.com/docs/12.x/migrations
 
-`php artisan migrate` |
-`php artisan migrate:rollback` | drops cars table
-`php artisan migrate:fresh` | Drops all tables and reruns migrations
+- `php artisan migrate` | run migrations
+- `php artisan migrate:rollback` | drops cars table
+- `php artisan migrate:fresh` | Drops all tables and reruns migrations
 
 ## Create Migration
 > https://laravel.com/docs/12.x/migrations
@@ -60,4 +60,5 @@ Node v22.13.1
 - https://laravel.com/docs/12.x/validation#creating-form-requests
 - https://laravel.com/docs/12.x/eloquent
 - https://laravel.com/docs/12.x/queries
+- https://laravel.com/docs/12.x/errors
 -

@@ -42,11 +42,19 @@ class SubmissionController extends Controller
         return redirect()->route('submission-show', ['id' => $submission->id, 'showBack' => true]);
     }
 
-    public function show($id)
+    public function show($id = null)
     {
+        if (!$id) {
+            abort(404, 'Submission ID is required.');
+        }
+
         // get submission row
         // $submission = DB::table('submissions')->find($id);
         $submission = Submission::where('id', $id)->first();
+
+        if (!$submission) {
+            abort(404, 'Submission is not found');
+        }
 
         $currentOdometer = $submission->current_odometer;
 
