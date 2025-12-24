@@ -59,7 +59,7 @@ class SubmissionController extends Controller
         $currentOdometer = $submission->current_odometer;
 
         // check if the car needs an oil change or not
-        $message = "Your car doesn't need an oil change!!";
+        $message = "Your car doesnt need an oil change!!";
 
         $previousOilChangeDate = $submission->previous_oil_change_date;
         $previousOilChangeDateParse = Carbon::parse($previousOilChangeDate);

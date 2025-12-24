@@ -44,7 +44,7 @@ class SubmissionStoreRequest extends FormRequest
             'previous_oil_change_date.required' => 'Date of Previous Oil Change is required',
             'previous_oil_change_date.date' => 'Date of Previous Oil Change must be valid date',
             'previous_oil_change_date.before' => 'Date of Previous Oil Change date must be in the past',
-            'previous_oil_change_odometer.required' => 'Odemeter at Previous Oil Change is required',
+            'previous_oil_change_odometer.required' => 'Odometer at Previous Oil Change is required',
             'previous_oil_change_odometer.integer' => 'Odemeter at Previous Oil Change must be a number',
             'previous_oil_change_odometer.min' => 'Odemeter at Previous Oil Change must be a positive number',
         ];
