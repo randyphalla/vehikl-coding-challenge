@@ -32,6 +32,13 @@ Node v22.13.1
 
 `npm run build` | build laravel project
 
+### Testing (Pest)
+> https://laravel.com/docs/12.x/testing
+
+`php artisan test` | Running tests
+
+`php artisan test --testsuite=Feature --stop-on-failure` | Running tests on Feature
+
 ## Migrations
 > https://laravel.com/docs/12.x/migrations
 
