@@ -24,9 +24,11 @@ Node v22.13.1
 
 ### Starting development
 
-- `composer run dev` and `http://localhost:8000` | run project and open application in the browser
-
 - `php artisan migrate` | run migrations
+
+- `composer run dev` and copy and paste `http://localhost:8000` into the browser | run both front/back end and open application in the browser
+
+- Open two terminals and run each command `npm run dev` and `php artisan serve` to run the front and back end. Open browser and go to  `http://localhost:8000` to open the application in the browser
 
 ### Building Project
 
@@ -45,6 +47,9 @@ Node v22.13.1
 - `php artisan migrate` | run migrations
 - `php artisan migrate:rollback` | drops cars table
 - `php artisan migrate:fresh` | Drops all tables and reruns migrations
+
+## If vendor folder is missing
+Run command in the root folder `composer install` to install dependencies
 
 ## Create Migration
 > https://laravel.com/docs/12.x/migrations
