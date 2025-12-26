@@ -8,38 +8,57 @@ A car needs an oil change if either of the following is true:
 - It’s been more than 5000 km since the last oil change, or
 - It’s been more than 6 months since the last oil change.
 
-## Getting Started
+## Requirements
+- PHP 8.4 or higher
+- Composer v2.8.12
+- Laravel Installer 5.18.0
+- SQLite
+- Node v22.13.1
 
-### Dependencies
+### Installing dependencies
 
 ```
-Composer v2.8.12
-Laravel Installer 5.18.0
-Node v22.13.1
+npm install
 ```
-
-### Installing
-
-`npm install` | install dependencies
 
 ### Starting development
 
-- `php artisan migrate` | run migrations
+#### Run database migrations
 
-- `composer run dev` and copy and paste `http://localhost:8000` into the browser | run both front/back end and open application in the browser
+```
+php artisan migrate
+```
 
-- Open two terminals and run each command `npm run dev` and `php artisan serve` to run the front and back end. Open browser and go to  `http://localhost:8000` to open the application in the browser
+#### Start the application
 
-### Building Project
+Open two terminals and run each command in each terminal
 
-`npm run build` | build laravel project
+```
+npm run dev
+```
+```
+php artisan serve
+```
+
+Then open your browser and navigate to: [http://localhost:8000](http://localhost:8000)
+
+### Alternative
+```
+composer run dev
+```
+
+Run both front/back end and then open your browser and navigate to: [http://localhost:8000](http://localhost:8000)
+
+### Build project
+```
+npm run build
+```
 
 ### Testing (Pest)
-> https://laravel.com/docs/12.x/testing
 
-`php artisan test` | Running tests
-
-`php artisan test --testsuite=Feature --stop-on-failure` | Running tests on Feature
+```
+php artisan test
+```
 
 ## Migrations
 > https://laravel.com/docs/12.x/migrations
@@ -49,28 +68,4 @@ Node v22.13.1
 - `php artisan migrate:fresh` | Drops all tables and reruns migrations
 
 ## If vendor folder is missing
-Run command in the root folder `composer install` to install dependencies
-
-## Create Migration
-> https://laravel.com/docs/12.x/migrations
-
-`php artisan make:migration create_awesome_table`
-
-## Create Controller
-> https://laravel.com/docs/12.x/controllers
-
-`php artisan make:controller AwesomeController`
-
-## Create Model
-> https://laravel.com/docs/12.x/eloquent#introduction
-
-`php artisan make:model YourAwesomeModel`
-
-## Additional Information
-- https://laravel.com/docs/12.x/helpers#dates
-- https://carbon.nesbot.com/docs/
-- https://laravel.com/docs/12.x/validation#creating-form-requests
-- https://laravel.com/docs/12.x/eloquent
-- https://laravel.com/docs/12.x/queries
-- https://laravel.com/docs/12.x/errors
--
+Run `composer install` command in the root folder to install dependencies
