@@ -1,11 +1,21 @@
 <?php
 
 namespace App\Models;
+// namespace App\Administration;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\SubmissionFactory;
 
 class Submission extends Model
 {
+    use HasFactory;
+
+    protected static function newFactory()
+    {
+        return SubmissionFactory::new();
+    }
+
     protected $fillable = [
         'current_odometer',
         'previous_oil_change_odometer',

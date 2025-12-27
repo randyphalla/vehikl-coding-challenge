@@ -56,8 +56,12 @@ npm run build
 
 ### Testing (Pest)
 
-```
+```bash
+#
 php artisan test
+
+#
+php artisan test --profile
 ```
 
 ## Migrations

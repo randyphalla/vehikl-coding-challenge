@@ -1,20 +1,29 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Submission;
 
 test('visit form page', function () {
     $response = $this->get('/');
     $response->assertStatus(200);
+    // $response->dump();
+    // $response->dumpHeaders();
+    // $response->dumpSession();
+    // $response->dd();
+    // $response->ddHeaders();
+    // $response->ddBody();
+    // $response->ddJson();
+    // $response->ddSession();
 });
 
 test('submit form without submitting anything', function() {
     $this->post('/check', [])
-    ->assertStatus(302)
-    ->assertSessionHasErrors([
-        'current_odometer',
-        'previous_oil_change_odometer',
-        'previous_oil_change_date'
-    ]);
+        ->assertStatus(302)
+        ->assertSessionHasErrors([
+            'current_odometer',
+            'previous_oil_change_odometer',
+            'previous_oil_change_date'
+        ]);
 });
 
 ///////////////////////////////////////////
@@ -42,9 +51,6 @@ test('submit form: when current_odometer is less than 5000 km', function () {
     expect($previousOilChangeDate) ->toDateTimeString()->toBe('2025-12-23 00:00:00');
 
     $this->post('/check', $formData)->assertStatus(302);
-    // ->dump();
-    // ->dumpHeaders()
-    // ->dumpSession();
 });
 
 test('submit form: when current_odometer is over 5000 km', function () {
@@ -185,32 +191,33 @@ test('visit result page with id but data isnt created', function () {
 ///////////////////////////////////////////
 // Testing: result page
 ///////////////////////////////////////////
-// test result with id and it should result 200 with the result response
 describe('submission success and visit result page with id', function () {
     test('submit form', function() {
-        $currentOdometer = 4000;
-        $previousOilChangeOdometer = 3000;
-        $previousOilChangeDate = Carbon::now()->subDay(1);
+        $submission = Submission::factory()
+            ->odometerIsLessThan5KM()
+            ->create();
 
-        $formData = [
-            'current_odometer' => $currentOdometer,
-            'previous_oil_change_odometer' => $previousOilChangeOdometer,
-            'previous_oil_change_date' => $previousOilChangeDate,
-        ];
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBe(4000);
 
-        expect($currentOdometer)->toBeInt()->toBe(4000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeLessThanOrEqual(5000);
 
-        expect($currentOdometer)->toBeLessThanOrEqual(5000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual($submission->previous_oil_change_odometer);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
+        expect($submission->previous_oil_change_odometer)
+            ->toBeInt()
+            ->toBe(3000);
 
-        $response = $this->post('/check', $formData);
+        // create a submission item and submit data to to "/check"
+        $response = $this->post('/check', $submission->toArray());
 
         // after submitting the form it does a redirect
         $response->assertStatus(302);
-
-        // $response->dump();
-        // $response->dumpHeaders();
 
         // get the location of the redirect
         $location = $response->headers->get('Location');
@@ -223,26 +230,30 @@ describe('submission success and visit result page with id', function () {
     });
 });
 
-// i wanna test if submission is success and car doesn't need oil change
 describe('submission success and car doesnt need oil change', function () {
     test('submit form', function() {
-        $currentOdometer = 4000;
-        $previousOilChangeOdometer = 3000;
-        $previousOilChangeDate = Carbon::now()->subDay(1);
+        $submission = Submission::factory()
+            ->odometerIsLessThan5KM()
+            ->create();
 
-        $formData = [
-            'current_odometer' => $currentOdometer,
-            'previous_oil_change_odometer' => $previousOilChangeOdometer,
-            'previous_oil_change_date' => $previousOilChangeDate,
-        ];
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBe(4000);
 
-        expect($currentOdometer)->toBeInt()->toBe(4000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeLessThanOrEqual(5000);
 
-        expect($currentOdometer)->toBeLessThanOrEqual(5000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual($submission->previous_oil_change_odometer);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
+        expect($submission->previous_oil_change_odometer)
+            ->toBeInt()
+            ->toBe(3000);
 
-        $response = $this->post('/check', $formData);
+        // create a submission item and submit data to to "/check"
+        $response = $this->post('/check', $submission->toArray());
 
         // after submitting the form it does a redirect
         $response->assertStatus(302);
@@ -261,26 +272,30 @@ describe('submission success and car doesnt need oil change', function () {
     });
 });
 
-// test if submission is success and car have over 5000 km
 describe('submission success and car has over 5000km', function () {
     test('submit form', function() {
-        $currentOdometer = 6000;
-        $previousOilChangeOdometer = 3000;
-        $previousOilChangeDate = Carbon::now()->subDay(1);
+        $submission = Submission::factory()
+            ->odometerIsOver5KM()
+            ->create();
 
-        $formData = [
-            'current_odometer' => $currentOdometer,
-            'previous_oil_change_odometer' => $previousOilChangeOdometer,
-            'previous_oil_change_date' => $previousOilChangeDate,
-        ];
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBe(8000);
 
-        expect($currentOdometer)->toBeInt()->toBe(6000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual(5000);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual(5000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual($submission->previous_oil_change_odometer);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
+        expect($submission->previous_oil_change_odometer)
+            ->toBeInt()
+            ->toBe(4000);
 
-        $response = $this->post('/check', $formData);
+        // create a submission item and submit data to to "/check"
+        $response = $this->post('/check', $submission->toArray());
 
         // after submitting the form it does a redirect
         $response->assertStatus(302);
@@ -299,26 +314,30 @@ describe('submission success and car has over 5000km', function () {
     });
 });
 
-// test if submission is success and car hasn't changed their oil for over 6 months
 describe('submission success and hasnt changed their oil over 6 months', function () {
     test('submit form', function() {
-        $currentOdometer = 4000;
-        $previousOilChangeOdometer = 3000;
-        $previousOilChangeDate = Carbon::now()->subMonth(6);
+        $submission = Submission::factory()
+            ->overSixMonths()
+            ->create();
 
-        $formData = [
-            'current_odometer' => $currentOdometer,
-            'previous_oil_change_odometer' => $previousOilChangeOdometer,
-            'previous_oil_change_date' => $previousOilChangeDate,
-        ];
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBe(4000);
 
-        expect($currentOdometer)->toBeInt()->toBe(4000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeLessThanOrEqual(5000);
 
-        expect($currentOdometer)->toBeLessThanOrEqual(5000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual($submission->previous_oil_change_odometer);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
+        expect($submission->previous_oil_change_odometer)
+            ->toBeInt()
+            ->toBe(3000);
 
-        $response = $this->post('/check', $formData);
+        // create a submission item and submit data to to "/check"
+        $response = $this->post('/check', $submission->toArray());
 
         // after submitting the form it does a redirect
         $response->assertStatus(302);
@@ -337,26 +356,30 @@ describe('submission success and hasnt changed their oil over 6 months', functio
     });
 });
 
-// test if submission is success and car have over 5000k and haven't change their oil over 6 months
 describe('submission success, car has over 5000km and hasnt changed their oil over 6 months', function () {
     test('submit form', function() {
-        $currentOdometer = 6000;
-        $previousOilChangeOdometer = 3000;
-        $previousOilChangeDate = Carbon::now()->subMonth(6);
+        $submission = Submission::factory()
+            ->needsOilChange()
+            ->create();
 
-        $formData = [
-            'current_odometer' => $currentOdometer,
-            'previous_oil_change_odometer' => $previousOilChangeOdometer,
-            'previous_oil_change_date' => $previousOilChangeDate,
-        ];
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBe(8000);
 
-        expect($currentOdometer)->toBeInt()->toBe(6000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual(5000);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual(5000);
+        expect($submission->current_odometer)
+            ->toBeInt()
+            ->toBeGreaterThanOrEqual($submission->previous_oil_change_odometer);
 
-        expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
+        expect($submission->previous_oil_change_odometer)
+            ->toBeInt()
+            ->toBe(4000);
 
-        $response = $this->post('/check', $formData);
+        // create a submission item and submit data to to "/check"
+        $response = $this->post('/check', $submission->toArray());
 
         // after submitting the form it does a redirect
         $response->assertStatus(302);
