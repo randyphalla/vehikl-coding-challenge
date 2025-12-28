@@ -30,9 +30,12 @@ test('submit form without submitting anything', function() {
 // Testing: current_odometer
 ///////////////////////////////////////////
 test('submit form: when current_odometer is less than 5000 km', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 4000;
     $previousOilChangeOdometer = 3000;
-    $previousOilChangeDate = Carbon::parse('2025-12-23 00:00:00');
+    $previousOilChangeDate = $date->subDay(1);
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -48,15 +51,18 @@ test('submit form: when current_odometer is less than 5000 km', function () {
 
     expect($currentOdometer)->not->toBeLessThan($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate) ->toDateTimeString()->toBe('2025-12-23 00:00:00');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-26 00:00:00');
 
     $this->post('/check', $formData)->assertStatus(302);
 });
 
 test('submit form: when current_odometer is over 5000 km', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 6000;
     $previousOilChangeOdometer = 3000;
-    $previousOilChangeDate = Carbon::parse('2025-12-23 00:00:00');
+    $previousOilChangeDate = $date->subDay(1);
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -72,7 +78,7 @@ test('submit form: when current_odometer is over 5000 km', function () {
 
     expect($currentOdometer)->not->toBeLessThan($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-23 00:00:00');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-26 00:00:00');
 
     $this->post('/check', $formData)->assertStatus(302);
 });
@@ -81,9 +87,12 @@ test('submit form: when current_odometer is over 5000 km', function () {
 // Testing: previous_oil_change_odometer
 ///////////////////////////////////////////
 test('submit form: when current_odometer is less than previous_oil_change_odometer', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 3000;
     $previousOilChangeOdometer = 4000;
-    $previousOilChangeDate = Carbon::parse('2025-12-23 00:00:00');
+    $previousOilChangeDate = $date->subDay(1);
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -97,7 +106,7 @@ test('submit form: when current_odometer is less than previous_oil_change_odomet
 
     expect($currentOdometer)->toBeLessThan($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-23 00:00:00');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-26 00:00:00');
 
     $this->followingRedirects()
         ->post('/check', $formData)
@@ -108,10 +117,12 @@ test('submit form: when current_odometer is less than previous_oil_change_odomet
 // Testing: previous_oil_change_date field
 ///////////////////////////////////////////
 test('submit form: when previous_oil_change_date is today', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 4000;
     $previousOilChangeOdometer = 3000;
-    Carbon::setTestNow('2025-12-24');
-    $previousOilChangeDate = Carbon::now();
+    $previousOilChangeDate = $date->now();
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -125,7 +136,7 @@ test('submit form: when previous_oil_change_date is today', function () {
 
     expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate->toDateString())->toBe('2025-12-24');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-27 00:00:00');
 
     $this->post('/check', $formData)
         ->assertStatus(302)
@@ -133,9 +144,12 @@ test('submit form: when previous_oil_change_date is today', function () {
 });
 
 test('submit form: when previous_oil_change_date is past', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 4000;
     $previousOilChangeOdometer = 3000;
-    $previousOilChangeDate = Carbon::parse('2025-12-23 00:00:00');
+    $previousOilChangeDate = $date->subDay(1);
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -149,15 +163,18 @@ test('submit form: when previous_oil_change_date is past', function () {
 
     expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-23 00:00:00');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-12-26 00:00:00');
 
     $this->post('/check', $formData)->assertStatus(302);
 });
 
 test('submit form: when previous_oil_change_date is over 6 months', function () {
+    $date = Carbon::create(2025, 12, 27, 0); // 2025-12-27 00:00:00
+    Carbon::setTestNow($date);
+
     $currentOdometer = 4000;
     $previousOilChangeOdometer = 3000;
-    $previousOilChangeDate = Carbon::parse('2025-01-23 00:00:00');
+    $previousOilChangeDate = $date->subMonths(6); // 2025-06-27 00:00:00
 
     $formData = [
         'current_odometer' => $currentOdometer,
@@ -171,7 +188,7 @@ test('submit form: when previous_oil_change_date is over 6 months', function () 
 
     expect($currentOdometer)->toBeGreaterThanOrEqual($previousOilChangeOdometer);
 
-    expect($previousOilChangeDate)->toDateTimeString()->toBe('2025-01-23 00:00:00');
+    expect($previousOilChangeDate)->toDateTimeString()->toBe("2025-06-27 00:00:00");
 
     $this->post('/check', $formData)->assertStatus(302);
 });
